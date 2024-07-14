@@ -1,0 +1,38 @@
+﻿@using Entites;
+@model IEnumerable<tblEmployees>
+<table id="WTDataTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="hidden">Id</th>
+            <th class="edit_del_width">Edit</th>
+            <th class="edit_del_width">Delete</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>D.O.B</th>
+            <th>D.O.J</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (tblEmployees employee in Model)
+            {
+        <tr>
+            <td class="hidden"> @employee.ID</td>
+            <td> <a href=@Url.Action("EditEmployee", "Employee", new { id = employee.ID }) target="_blank"> <img src=@Url.Content("~/images/edit.png")></a></td>
+            <td> <a href='#'> <img src=@Url.Content("~/images/delete.png") onclick=showSwalDialog(@employee.ID);></a></td>
+            <td> @employee.FirstName</td>
+            <td> @employee.EmployeeCode</td>
+            <td>@(employee.DateOfBirth.HasValue ? employee.DateOfBirth.Value.ToString("dd/MM/yyyy") : "N/A")</td>
+            <td>@(employee.DateOfJoining.HasValue ? DateTimeOffset.FromUnixTimeSeconds((long)employee.DateOfJoining.Value).UtcDateTime.ToString("yyyy-MM-dd") : "N/A")</td>
+            <td> @employee.Salary</td>
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+
+
